@@ -26,10 +26,12 @@ require 'init.php';
 	        <div class="row" style="align-content: center">
 				
 				<?php if (isLoggedIn()): ?>
-            <div class="col"><h7 style="color: aliceblue">Olá, <?php echo $_SESSION['user_name[0]']; ?>.</h7> <a class="btn btn-outline-light my-2 my-sm-0" href="panel.php" role="button">Painel</a> <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php" role="button">Sair</a></div>
+            <div class="col"><h7 style="color: aliceblue">Olá, <?php echo $_SESSION['user_name']; ?>.</h7> <a class="btn btn-outline-light my-2 my-sm-0" href="panel.php" role="button">Painel</a> <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php" role="button">Sair</a></div>
         <?php else: ?>
             <div class="col"><a class="btn btn-outline-success my-2 my-sm-0" href="form-login.php" role="button">Entrar</a></div>
         <?php endif; ?>
+				
+				
 			
             </div>
 	        
@@ -44,7 +46,31 @@ require 'init.php';
 <div class="container">
 	<h2>Perdeu um animal ?</h2>
 	<p>Cadastre ele aqui alguém pode ter o encontrado !</p>
+	
+	<?php
+				$PDO = db_connect();
+ 
+$sql = "SELECT * FROM images";
+$stmt = $PDO->prepare($sql);
+	$stmt->execute();
+ 
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ 
+if (count($users) <= 0)
+{
+    echo "Email ou senha incorretos";
+    exit;
+}
+				echo '<img src="data:image/jpeg;base64,' . base64_encode( $users[0]['image'] ) . '" class="img-thumbnail img-fluid" alt="Placeholder image">';
+	            echo '<img src="data:image/jpeg;base64,' . base64_encode( $users[1]['image'] ) . '" class="img-thumbnail img-fluid" alt="Placeholder image">';
+	
+	
+				
+				?>
 	</div>
+	
+	
+	
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="js/jquery-3.2.1.min.js"></script>
 
