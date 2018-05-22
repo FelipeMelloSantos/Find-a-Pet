@@ -26,7 +26,7 @@ $stmt = $PDO->prepare($sql);
  
 $stmt->execute();
  
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
  
 if (count($users) <= 0)
 {
