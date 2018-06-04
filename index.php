@@ -20,7 +20,7 @@ require 'init.php';
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent1">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"> <a class="nav-link" href="Home.html">Home <span class="sr-only">(current)</span></a> </li>
+				<li class="nav-item active"> <a class="nav-link" href="/test/">Home <span class="sr-only">(current)</span></a> </li>
 				<li class="nav-item"> <a class="nav-link" href="Sobre.html">Sobre</a> </li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
@@ -28,8 +28,9 @@ require 'init.php';
 
 					<?php if (isLoggedIn()): ?>
 					<div class="col">
-						<h7 style="color: aliceblue">Olá,
-							<?php echo $_SESSION['user_name']; ?>.</h7> <a class="btn btn-outline-light my-2 my-sm-0" href="panel.php" role="button">Painel</a> <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php" role="button">Sair</a>
+						<h7 style="color: aliceblue">Olá, <?php echo $_SESSION['user_name']; ?></h7>
+						<a class="btn btn-outline-light my-2 my-sm-0" href="panel.php" role="button">Painel</a>
+						<a class="btn btn-outline-success my-2 my-sm-0" href="logout.php" role="button">Sair</a>
 					</div>
 					<?php else: ?>
 					<div class="col"><a class="btn btn-outline-success my-2 my-sm-0" href="form-login.php" role="button">Entrar</a>
@@ -50,13 +51,17 @@ require 'init.php';
 
 	<div class="container">
 		<h2>Perdeu um animal ?</h2>
-		<p>Cadastre ele aqui alguém pode ter o encontrado !</p>
+		<p><a href="login.php">Cadastre ele aqui</a> alguém pode ter o encontrado !</p>
 		<div class="row">
-			<?php
+			<div class="container">
+	  <?php
 			$PDO = db_connect();
 
-			$sql = "SELECT * FROM images";
+			$sql = "SELECT * FROM  animal INNER JOIN images ON animal.idanimal=images.animal_idanimal";
+			
+
 			$stmt = $PDO->prepare( $sql );
+			$stmt->bindParam(':iduser', $_SESSION['user_id']);
 			$stmt->execute();
 
 			$users = $stmt->fetchAll( PDO::FETCH_ASSOC );
@@ -65,13 +70,28 @@ require 'init.php';
 				echo "Email ou senha incorretos";
 				exit;
 			}
-
+			
+			
+						
 			foreach ( $users as $user ) {
-				echo '<div class="col-xl-4"><img src="data:image/jpeg;base64,' . base64_encode( $user[ 'image' ] ) . '" class="img-thumbnail img-fluid" alt="Placeholder image"></div>';
-
+				echo '<div class="col-4" style="text-align: center">';
+				echo '<img src="data:image/jpeg;base64,' . base64_encode( $user[ 'image' ] ) . '" class="img-thumbnail img-fluid" alt="Placeholder image">';
+				echo "<a href='animal.php?". $user['idanimal'] ."'><h4>" . $user['name'] . "</h4></a>";
+				echo '</div>';
+			
 			}
+			
+			
 
+			
 			?>
+		  
+		  
+		  
+		  
+		  
+		  
+	  </div>
 		</div>
 	</div>
 

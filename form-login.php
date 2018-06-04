@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+require 'init.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -29,6 +34,11 @@
           </form>
       </div>
   </nav>
+	  
+	  <?php if (isLoggedIn()): 
+					header("Location: http://localhost/test/index.php");
+	  				die();
+					endif; ?>
 	  
 	  
 
