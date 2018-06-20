@@ -71,7 +71,7 @@ require_once 'init.php';
 			$users = $stmt->fetchAll( PDO::FETCH_ASSOC );
 
 			if ( count( $users ) <= 0 ) {
-				echo "Email ou senha incorretos";
+				echo "Você não tem animais cadastrados";
 				exit;
 			}
 			

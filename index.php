@@ -74,7 +74,7 @@ require 'init.php';
 			
 						
 			foreach ( $users as $user ) {
-				echo '<div class="col-4" style="text-align: center">';
+				echo '<div class="col-xl-4" style="text-align: center">';
 				echo '<img src="data:image/jpeg;base64,' . base64_encode( $user[ 'image' ] ) . '" class="img-thumbnail img-fluid" alt="Placeholder image">';
 				echo "<a href='animal.php?". $user['idanimal'] ."'><h4>" . $user['name'] . "</h4></a>";
 				echo '</div>';
